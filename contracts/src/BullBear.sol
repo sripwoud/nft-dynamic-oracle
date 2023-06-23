@@ -9,9 +9,9 @@ import "openzeppelin/access/Ownable.sol";
 import "openzeppelin/utils/Counters.sol";
 import "openzeppelin/utils/Strings.sol";
 import "chainlink/interfaces/AggregatorV3Interface.sol";
-import "chainlink/automation/KeeperCompatible.sol";
+import "chainlink/interfaces/automation/KeeperCompatibleInterface.sol";
 
-contract BullBear is ERC721Enumerable, ERC721URIStorage, Ownable {
+contract BullBear is ERC721Enumerable, ERC721URIStorage, Ownable, KeeperCompatibleInterface {
     string[] bearUris = [
         "https://ipfs.filebase.io/ipfs/QmPQG3SJzb4ktRwNgK8ZARXLSLPnDGR3EiwF71snxMCUix",
         "https://ipfs.filebase.io/ipfs/QmbwuPpuo2KJzm1huTawf7oyduZKRe2Ff5sJyKdbdRvRrc",
@@ -23,7 +23,14 @@ contract BullBear is ERC721Enumerable, ERC721URIStorage, Ownable {
         "https://ipfs.filebase.io/ipfs/QmRU8syL8MoUxYyYnSb1twm1gwzyCXxFfdpm9bh3dDBNoJ"
     ];
 
-    constructor() ERC721("BullBear", "BB") {}
+    uint256 lastTimeStamp;
+    uint256 public interval;
+    uint256 mockUpkeepCount = 0;
+
+    constructor(uint256 _inteval) ERC721("BullBear", "BB") {
+        interval = _inteval;
+        lastTimeStamp = block.timestamp;
+    }
 
     function safeMint(address to) public {
         uint256 tokenId = totalSupply();
@@ -49,7 +56,23 @@ contract BullBear is ERC721Enumerable, ERC721URIStorage, Ownable {
         return super.tokenURI(tokenId);
     }
 
-    // The following functions are overrides required by Solidity.
+    function checkUpkeep(bytes calldata /* checkData */ )
+        external
+        view
+        returns (bool upkeepNeeded, bytes memory /* performData */ )
+    {
+        upkeepNeeded = (block.timestamp - lastTimeStamp) > interval;
+        // We don't use the checkData in this example. The checkData is defined when the Upkeep was registered.
+    }
+
+    function performUpkeep(bytes calldata /* performData */ ) external {
+        // revalidate the interval
+        if ((block.timestamp - lastTimeStamp) > interval) {
+            lastTimeStamp = block.timestamp;
+            mockUpkeepCount++;
+        }
+    }
+
     function _beforeTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize)
         internal
         override(ERC721, ERC721Enumerable)
