@@ -1,0 +1,11 @@
+node_modules
+pnpm-lock.yaml
+
+ui/.next
+ui/src/generated.ts
+contracts/out
+
+.idea
+
+contracts/lib/forge-std
+cache
