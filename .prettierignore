@@ -7,5 +7,5 @@ contracts/out
 
 .idea
 
-contracts/lib/forge-std
+contracts/lib
 cache
