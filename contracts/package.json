@@ -7,7 +7,9 @@
   "scripts": {
     "build": "wagmi generate --root ..",
     "deploy": "source ../.env && forge create ../contracts/src/Counter.sol:Counter --rpc-url $FORGE_RPC_URL --private-key $FORGE_PRIVATE_KEY --etherscan-api-key $ETHERSCAN_API_KEY --verify",
-    "deploy.anvil": "source ../.env && forge create ../contracts/src/Counter.sol:Counter --rpc-url http://127.0.0.1:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
+    "deploy.anvil": "forge create contracts/src/BullBear.sol:BullBear --rpc-url http://127.0.0.1:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
+    "mint.anvil": "cast send --rpc-url http://127.0.0.1:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0 'safeMint(address)' 0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+    "tokenuri.anvil": "cast --to-ascii $(cast call --rpc-url http://127.0.0.1:8545 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0 'tokenURI(uint)' 0)",
     "_format": "forge fmt --check --root ..",
     "_format.fix": "forge fmt --root ..",
     "_lint": "solhint '**/*.sol'",

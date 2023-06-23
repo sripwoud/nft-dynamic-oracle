@@ -12,12 +12,12 @@ import "chainlink/interfaces/AggregatorV3Interface.sol";
 import "chainlink/automation/KeeperCompatible.sol";
 
 contract BullBear is ERC721Enumerable, ERC721URIStorage, Ownable {
-    string[] bullUris = [
+    string[] bearUris = [
         "https://ipfs.filebase.io/ipfs/QmPQG3SJzb4ktRwNgK8ZARXLSLPnDGR3EiwF71snxMCUix",
         "https://ipfs.filebase.io/ipfs/QmbwuPpuo2KJzm1huTawf7oyduZKRe2Ff5sJyKdbdRvRrc",
         "https://ipfs.filebase.io/ipfs/Qmb8GUzLxJB8WQwPy8wCK46HaGBswy7g25GgrRCsBKYmMQ"
     ];
-    string[] bearUris = [
+    string[] bullUris = [
         "https://ipfs.filebase.io/ipfs/Qmbmb7FPLVP6sMZjK8tEyuHytSNU34bMqcG1uuvuhfVMyZ",
         "https://ipfs.filebase.io/ipfs/QmXV7oQCSWV4Kf7TKYNeyL65fLSgyMBwC6A5yPhZ5eYsED",
         "https://ipfs.filebase.io/ipfs/QmRU8syL8MoUxYyYnSb1twm1gwzyCXxFfdpm9bh3dDBNoJ"
